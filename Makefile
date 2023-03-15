@@ -25,7 +25,7 @@ logs:
 
 
 clean: down
-	docker-compose -f srcs/docker-compose.yml down -v --rmi all --remove-orphans
+	docker compose -f ./srcs/docker-compose.yml down -v --rmi all --remove-orphans
 
 fclean: clean
 	rm -rf ./data
