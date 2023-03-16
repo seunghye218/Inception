@@ -33,5 +33,5 @@ COPY tools/wordpress_healthcheck.sh .
 
 ENTRYPOINT [ "sh", "wp-config-create.sh" ]
 
-HEALTHCHECK --interval=7s --timeout=3s --start-period=1s --retries=5 \
+HEALTHCHECK --interval=5s --timeout=3s --start-period=1s --retries=5 \
 CMD ["sh", "wordpress_healthcheck.sh"]

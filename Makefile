@@ -28,7 +28,7 @@ clean: down
 	docker compose -f ./srcs/docker-compose.yml down -v --rmi all --remove-orphans
 
 fclean: clean
-	rm -rf ./data
+	sudo rm -rf ./data
 	#rm -f .setup
 	docker system prune --volumes --all --force
 	docker network prune --force
