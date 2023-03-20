@@ -2,12 +2,8 @@ services:
   nginx:
     init: true
     build: requirements/nginx/
-    #build:
-    #  context: .
-    #  dockerfile: requirements/nginx/Dockerfile
-    container_name: j_nginx
+    container_name: nginx
     depends_on:
-      #- wordpress
       wordpress:
         condition: service_healthy
     ports:
@@ -26,9 +22,8 @@ services:
         DB_NAME: ${DB_NAME}
         DB_USER: ${DB_USER}
         DB_PASS: ${DB_PASS}
-    container_name: j_wordpress
+    container_name: wordpress
     depends_on:
-      #- mariadb
       mariadb:
         condition: service_healthy
     expose:
@@ -52,7 +47,7 @@ services:
         DB_USER: ${DB_USER}
         DB_PASS: ${DB_PASS}
         DB_ROOT: ${DB_ROOT}
-    container_name: j_mariadb
+    container_name: mariadb
     ports:
       - "3306:3306"
     restart: always
@@ -67,15 +62,13 @@ volumes:
     driver_opts:
       o: bind
       type: volume
-      #Docker를 사용하는 호스트 시스템의 `/home/login/data` 폴더에서 `volume`을 사용할 수 있습니다.
-      #device: /home/${USER}/data/wordpress
-      device: ../data/wordpress
+      device: /home/seunghye/data/wordpress
   db-volume:
     driver: local
     driver_opts:
       o: bind
       type: volume
-      device: ../data/mariadb
+      device: /home/seunghye/data/mariadb
 
 networks: 
   inception:

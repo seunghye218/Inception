@@ -1,6 +1,9 @@
 FROM alpine:3.16
 
-ARG DB_NAME DB_USER DB_PASS
+ARG DB_NAME
+ARG DB_USER
+ARG DB_PASS
+ARG DB_ROOT
 
 RUN apk update && apk add --no-cache mariadb mariadb-client && \
     mkdir -p /var/run/mysqld && \
