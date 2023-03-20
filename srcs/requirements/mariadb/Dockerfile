@@ -22,7 +22,7 @@ COPY tools/create_db.sh .
 COPY tools/mariadb_healthcheck.sh .
 USER mysql
 
-ENTRYPOINT [ "sh", "create_db.sh"]
+ENTRYPOINT [ "sh", "mariadb_script.sh"]
 
 HEALTHCHECK --interval=5s --timeout=3s --start-period=1s --retries=5 \
 CMD ["sh", "mariadb_healthcheck.sh"]

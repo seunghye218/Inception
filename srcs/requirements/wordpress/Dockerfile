@@ -18,7 +18,7 @@ RUN apk update && apk upgrade && apk add --no-cache \
     php${PHP_VERSION}-openssl \
     php${PHP_VERSION}-xml \
     php${PHP_VERSION}-zip \
-    #php${PHP_VERSION}-redis \
+    php${PHP_VERSION}-redis \
     php${PHP_VERSION}-phar && \
     sed -i "s|listen = 127.0.0.1:9000|listen = 9000|g" \
       /etc/php${PHP_VERSION}/php-fpm.d/www.conf && \
@@ -33,7 +33,7 @@ RUN apk update && apk upgrade && apk add --no-cache \
 COPY tools/wp-config-create.sh .
 COPY tools/wordpress_healthcheck.sh .
 
-ENTRYPOINT [ "sh", "wp-config-create.sh" ]
+ENTRYPOINT [ "sh", "wp_script.sh" ]
 
 HEALTHCHECK --interval=5s --timeout=3s --start-period=1s --retries=5 \
-CMD ["sh", "wordpress_healthcheck.sh"]
+CMD ["sh", "wp_healthcheck.sh"]
