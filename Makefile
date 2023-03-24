@@ -1,7 +1,5 @@
 name = inception
 
-
-
 all:
 	mkdir -p /home/seunghye/data/wordpress /home/seunghye/data/mariadb /home/seunghye/data/mariadb_log
 	docker-compose -f ./srcs/docker-compose.yml --env-file srcs/.env up -d --build --force-recreate
