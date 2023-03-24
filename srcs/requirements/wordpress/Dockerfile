@@ -31,7 +31,6 @@ RUN apk update && apk add --no-cache \
       /etc/php${PHP_VERSION}/php-fpm.d/www.conf && \
     sed -i "s|;listen.group = nobody|listen.group = nobody|g" \
       /etc/php${PHP_VERSION}/php-fpm.d/www.conf && \
-    rm -f /var/cache/apk/* && \
     wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar && chmod +x wp-cli.phar && mv wp-cli.phar /usr/bin/wp
 
 COPY tools/wp_script.sh .

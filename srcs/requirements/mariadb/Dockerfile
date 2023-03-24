@@ -14,8 +14,6 @@ RUN apk update && apk add --no-cache mariadb mariadb-client && \
     } | tee  /etc/my.cnf.d/docker.cnf && \
     sed -i "s|skip-networking|skip-networking=0|g" /etc/my.cnf.d/mariadb-server.cnf && \
     mysql_install_db --user=mysql --datadir=/var/lib/mysql --auth-root-authentication-method=normal && \
-    #chown -R mysql:mysql /var/lib/mysql /run/mysqld && \
-    # logrotate setting
     { echo '[mariadb]'; \
       echo 'log_error=/var/log/mysql/mariadb.err'; \
       echo 'general_log'; \

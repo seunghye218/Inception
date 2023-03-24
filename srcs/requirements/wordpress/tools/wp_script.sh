@@ -34,7 +34,7 @@ define('WP_REDIS_DISABLED', false);
 EOF
 
 cd /var/www
-wp core download --locale=ko_KR --path=/var/www/
+wp core download --path=/var/www/
 wp core install --url="$WP_URL" --title="$WP_TITLE" --admin_user="$WP_ADMIN_USER" --admin_password="$WP_ADMIN_PWD" --admin_email="$WP_ADMIN_EMAIL" --skip-email --path=/var/www/
 wp plugin install redis-cache --activate --path=/var/www/
 wp plugin update --all --path=/var/www/
