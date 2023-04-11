@@ -1,7 +1,8 @@
 services:
   nginx:
-    init: true
     build: requirements/nginx/
+    image: nginx
+    init: true
     container_name: nginx
     depends_on:
       wordpress:
@@ -15,7 +16,6 @@ services:
       - inception
 
   wordpress:
-    init: true
     build:
       context: requirements/wordpress/
       args:
@@ -27,6 +27,8 @@ services:
         REDIS_MAXTTL : ${REDIS_MAXTTL}
         REDIS_TIMEOUT : ${REDIS_TIMEOUT}
         REDIS_READ_TIMEOUT : ${REDIS_READ_TIMEOUT}
+    image: wordpress
+    init: true
     container_name: wordpress
     depends_on:
       mariadb:
@@ -42,9 +44,6 @@ services:
       - .env
 
   mariadb:
-    init: true
-    env_file:
-      - .env
     build: 
       context: requirements/mariadb/
       args:
@@ -52,6 +51,10 @@ services:
         DB_USER: ${DB_USER}
         DB_PASS: ${DB_PASS}
         DB_ROOT: ${DB_ROOT}
+    image: mariadb
+    init: true
+    env_file:
+      - .env
     container_name: mariadb
     ports:
       - "3306:3306"
@@ -63,8 +66,9 @@ services:
       - inception
     
   redis:
-    init: true
     build: requirements/bonus/redis/
+    image: redis
+    init: true
     container_name: redis
     restart: always
     ports:
@@ -73,12 +77,13 @@ services:
       - inception
 
   vsftpd:
-    init: true
     build:
       context: requirements/bonus/vsftpd/
       args:
         FTP_USR: ${FTP_USR}
         FTP_PWD: ${FTP_PWD}
+    image: vsftpd
+    init: true
     container_name: vsftpd
     restart: always
     ports:
@@ -89,8 +94,9 @@ services:
      - inception
 
   adminer:
-    init: true
     build: requirements/bonus/adminer
+    image: adminer
+    init: true
     container_name: adminer
     restart: always
     depends_on:
@@ -104,8 +110,9 @@ services:
      - inception
   
   site:
-    init: true
     build: requirements/bonus/site
+    image: site
+    init: true
     container_name: site
     restart: always
     depends_on:
@@ -117,8 +124,9 @@ services:
      - inception
 
   logrotate:
-    init: true
     build: requirements/bonus/logrotate
+    image: logrotate
+    init: true
     container_name: logrotate
     restart: always
     depends_on:
