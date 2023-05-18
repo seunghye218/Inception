@@ -1,6 +1,6 @@
-name = inception
+name := inception
 
-all:
+all: init
 	mkdir -p /home/seunghye/data/wordpress /home/seunghye/data/mariadb /home/seunghye/data/mariadb_log
 	docker-compose -f ./srcs/docker-compose.yml --env-file srcs/.env up -d --build --force-recreate
 
@@ -36,4 +36,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all build down re clean fclean start stop restart
+.PHONY: all build down re clean fclean start stop restart init
