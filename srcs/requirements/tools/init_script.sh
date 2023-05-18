@@ -1,6 +1,6 @@
 #!/bin/sh
 
-cp /home/seunghye/.env ../../
+cp /home/seunghye/.env ./srcs/
 
 if [ ! -f "../../../.git" ];
 then
