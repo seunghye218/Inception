@@ -24,7 +24,8 @@ RUN apk update && apk add --no-cache \
   php${PHP_VERSION}-xml \
   php${PHP_VERSION}-zip \
   php${PHP_VERSION}-redis \
-  php${PHP_VERSION}-phar && \
+  php${PHP_VERSION}-phar \
+  php${PHP_VERSION}-ctype && \
   sed -i "s|listen = 127.0.0.1:9000|listen = 9000|g" \
   /etc/php${PHP_VERSION}/php-fpm.d/www.conf && \
   sed -i "s|;listen.owner = nobody|listen.owner = nobody|g" \
@@ -33,10 +34,10 @@ RUN apk update && apk add --no-cache \
   /etc/php${PHP_VERSION}/php-fpm.d/www.conf && \
   wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar && chmod +x wp-cli.phar && mv wp-cli.phar /usr/bin/wp
 
-COPY tools/wp_script.sh .
 COPY tools/wp_healthcheck.sh .
+COPY tools/wp_script.sh .
 
 ENTRYPOINT [ "sh", "wp_script.sh" ]
 
-HEALTHCHECK --interval=12s --timeout=3s --start-period=1s --retries=5 \
+HEALTHCHECK --interval=5s --timeout=3s --start-period=1s --retries=50 \
   CMD ["sh", "wp_healthcheck.sh"]
