@@ -34,5 +34,5 @@ USER mysql
 
 ENTRYPOINT [ "sh", "mariadb_script.sh"]
 
-HEALTHCHECK --interval=6s --timeout=5s --start-period=1s --retries=5 \
+HEALTHCHECK --interval=6s --timeout=5s --start-period=1s --retries=50 \
   CMD ["sh", "mariadb_healthcheck.sh"]

@@ -7,8 +7,6 @@ services:
     depends_on:
       wordpress:
         condition: service_healthy
-      site:
-        condition: service_started
     ports:
       - "443:443"
     volumes:
@@ -36,6 +34,8 @@ services:
     depends_on:
       mariadb:
         condition: service_healthy
+      redis:
+        condition: service_started
     expose:
       - "9000"
     restart: always
@@ -59,8 +59,8 @@ services:
     env_file:
       - .env
     container_name: mariadb
-    ports:
-      - "3306:3306"
+    expose:
+      - 3306
     restart: always
     volumes:
       - db-volume:/var/lib/mysql/
@@ -74,8 +74,8 @@ services:
     init: true
     container_name: redis
     restart: always
-    ports:
-      - "6379:6379"
+    expose:
+      - 6379
     networks:
       - inception
 
@@ -88,6 +88,9 @@ services:
     image: vsftpd
     init: true
     container_name: vsftpd
+    depends_on:
+      wordpress:
+        condition: service_started
     restart: always
     ports:
       - "21:21"
@@ -98,12 +101,14 @@ services:
 
   adminer:
     build: requirements/bonus/adminer
+    environment:
+      - PHP_VERSION=${PHP_VERSION}
     image: adminer
     init: true
     container_name: adminer
     restart: always
     depends_on:
-      mariadb:
+      wordpress:
         condition: service_healthy
     ports:
       - "8000:8000"
@@ -118,9 +123,6 @@ services:
     init: true
     container_name: site
     restart: always
-    depends_on:
-      mariadb:
-        condition: service_healthy
     ports:
       - "4242:4242"
     networks:
