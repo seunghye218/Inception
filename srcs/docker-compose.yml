@@ -7,6 +7,8 @@ services:
     depends_on:
       wordpress:
         condition: service_healthy
+      site:
+        condition: service_started
     ports:
       - "443:443"
     volumes:
@@ -19,14 +21,15 @@ services:
     build:
       context: requirements/wordpress/
       args:
+        PHP_VERSION: ${PHP_VERSION}
         DB_NAME: ${DB_NAME}
         DB_USER: ${DB_USER}
         DB_PASS: ${DB_PASS}
-        REDIS_HOST : ${REDIS_HOST}
-        REDIS_DATABASE : ${REDIS_DATABASE}
-        REDIS_MAXTTL : ${REDIS_MAXTTL}
-        REDIS_TIMEOUT : ${REDIS_TIMEOUT}
-        REDIS_READ_TIMEOUT : ${REDIS_READ_TIMEOUT}
+        REDIS_HOST: ${REDIS_HOST}
+        REDIS_DATABASE: ${REDIS_DATABASE}
+        REDIS_MAXTTL: ${REDIS_MAXTTL}
+        REDIS_TIMEOUT: ${REDIS_TIMEOUT}
+        REDIS_READ_TIMEOUT: ${REDIS_READ_TIMEOUT}
     image: wordpress
     init: true
     container_name: wordpress
@@ -44,7 +47,7 @@ services:
       - .env
 
   mariadb:
-    build: 
+    build:
       context: requirements/mariadb/
       args:
         DB_NAME: ${DB_NAME}
@@ -64,7 +67,7 @@ services:
       - log-volume:/var/log/mysql/
     networks:
       - inception
-    
+
   redis:
     build: requirements/bonus/redis/
     image: redis
@@ -91,7 +94,7 @@ services:
     volumes:
       - wp-volume:/var/www/
     networks:
-     - inception
+      - inception
 
   adminer:
     build: requirements/bonus/adminer
@@ -107,8 +110,8 @@ services:
     volumes:
       - wp-volume:/var/www/
     networks:
-     - inception
-  
+      - inception
+
   site:
     build: requirements/bonus/site
     image: site
@@ -121,7 +124,7 @@ services:
     ports:
       - "4242:4242"
     networks:
-     - inception
+      - inception
 
   logrotate:
     build: requirements/bonus/logrotate
@@ -135,7 +138,7 @@ services:
     volumes:
       - log-volume:/var/log/mysql/
     networks:
-     - inception
+      - inception
 
 volumes:
   wp-volume:
@@ -156,9 +159,8 @@ volumes:
       o: bind
       type: volume
       device: /home/seunghye/data/mariadb_log
-    
 
-networks: 
+networks:
   inception:
     driver: bridge
     name: inception

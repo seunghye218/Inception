@@ -42,4 +42,4 @@ wp user create $WP_USER $WP_USER_EMAIL --role=author --user_pass=$WP_USER_PWD --
 wp redis enable --path=/var/www/
 fi
 
-exec /usr/sbin/php-fpm8 -F
+exec /usr/sbin/php-fpm${PHP_VERSION} -F
