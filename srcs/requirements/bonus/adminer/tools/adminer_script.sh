@@ -6,4 +6,4 @@ then
   curl -s -L https://github.com/vrana/adminer/releases/download/v4.8.1/adminer-4.8.1-mysql-en.php --output /var/www/adminer/index.php
 fi
 
-exec php-fpm8 --nodaemonize
+exec php-fpm81 --nodaemonize
